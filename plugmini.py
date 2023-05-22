@@ -49,4 +49,4 @@ class PlugMiniJP(SwitchBotDevice):
 
     def is_poweron(self) -> bool:
         self.renew()
-        return bool(self._get("power"))
+        return self._get("power").upper() != "OFF"
