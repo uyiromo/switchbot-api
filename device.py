@@ -13,9 +13,11 @@ class SwitchBotDevice:
         return self.dump(None)
 
     def __init__(self, device_id: str):
-        self._js: JSON = get_status(device_id)
+        self._js: JSON = dict()
+        self._uninit: bool = True
 
     def _get(self, key: str) -> Any:
+        self.renew()
         return self._js[key]
 
     @property
@@ -35,6 +37,9 @@ class SwitchBotDevice:
             f"/v1.1/devices/{self.device_id}/commands",
             commands,
         )
+        self._uninit = True
 
     def renew(self) -> None:
-        self._js = get_status(self.device_id)
+        if self._uninit:
+            self._js = get_status(self.device_id)
+        self._uninit = False
