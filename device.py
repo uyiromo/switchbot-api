@@ -14,6 +14,7 @@ class SwitchBotDevice:
 
     def __init__(self, device_id: str):
         self._js: JSON = dict()
+        self._devide_id: str = device_id
         self._uninit: bool = True
 
     def _get(self, key: str) -> Any:
@@ -22,7 +23,7 @@ class SwitchBotDevice:
 
     @property
     def device_id(self) -> str:
-        return str(self._get("deviceId"))
+        return self._devide_id
 
     @property
     def device_type(self) -> str:
